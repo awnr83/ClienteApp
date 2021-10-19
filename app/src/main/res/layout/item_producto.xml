@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="producto"
+            type="com.moappdev.clienteapp.model.Producto" />
+        <variable
+            name="clickListener"
+            type="com.moappdev.clienteapp.home.HomeAdapter.ProductoListener"/>
+        <variable
+            name="imgListener"
+            type="com.moappdev.clienteapp.home.HomeAdapter.ImageListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/minimo"
+        android:onClick="@{()->clickListener.onClick(producto)}">
+
+        <ImageButton
+            android:id="@+id/imgProducto"
+            loadImage="@{producto.imgUrl}"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
+            android:onClick="@{()->imgListener.onClick(producto)}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="?attr/selectableItemBackground"
+            tools:src="@tools:sample/avatars" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvNombre"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/minimo"
+            android:padding="@dimen/minimo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgProducto"
+            app:layout_constraintTop_toTopOf="@id/imgProducto"
+            tools:text="Nombre del producto" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDescripcion"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/minimo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvNombre"
+            app:layout_constraintTop_toBottomOf="@id/tvNombre" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCantidad"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/minimo"
+            app:layout_constraintEnd_toStartOf="@+id/tvPrecio"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imgProducto"
+            app:layout_constraintStart_toStartOf="@id/tvNombre"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+            tools:text="x54" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPrecio"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/minimo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvCantidad"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+            tools:text="$12.00 u$d" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#3C000000"
+            app:layout_constraintBottom_toBottomOf="@id/imgProducto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgProducto" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

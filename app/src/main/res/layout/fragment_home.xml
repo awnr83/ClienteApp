@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".home.HomeFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.moappdev.clienteapp.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvProductos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvCar"
+            tools:visibility="visible">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProductos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_producto"/>
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Carrito vacio"
+            android:layout_margin="@dimen/minimo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/TextAppearance.MaterialComponents.Headline5"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_cart"
+            android:text="Ver Carrito"
+            android:layout_marginEnd="@dimen/minimo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvCar"
+            app:layout_constraintBottom_toBottomOf="@id/tvCar"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/design_default_color_primary">
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,9 +23,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="100"
+                android:paddingStart="@dimen/minimo"
                 android:text="Carrito de compra"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="@color/design_default_color_on_primary"/>
+                android:textColor="@color/design_default_color_on_primary"
+                android:drawableStart="@drawable/ic_cart" />
             <ImageButton
                 android:id="@+id/btncancelar"
                 android:layout_width="wrap_content"
@@ -38,15 +40,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/normal">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCart"
+            android:id="@+id/rvCart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/normal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintHeight_default="wrap"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="7"
             tools:listitem="@layout/item_producto_cart"/>
@@ -59,7 +61,7 @@
             android:textAlignment="textEnd"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewCart"
+            app:layout_constraintTop_toBottomOf="@id/rvCart"
             android:text="Total: $999,99"/>
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabPagar"
@@ -72,7 +74,7 @@
             app:iconGravity="textStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTotal"/>
+            app:layout_constraintTop_toBottomOf="@id/tvTotal" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
 </layout>

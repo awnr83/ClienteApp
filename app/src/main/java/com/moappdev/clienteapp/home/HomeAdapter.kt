@@ -18,19 +18,10 @@ class HomeAdapter(val clickListener: ProductoListener, val imgListener: ImageLis
 
         fun bind(item: Producto, clickListener: ProductoListener, imgListener: ImageListener) {
             binding.producto=item
-            binding.tvNombre.text= item.name
             binding.tvPrecio.text= "Precio: $ ${item.precio.toString()}"    //migrar
             binding.tvCantidad.text= "Stock: ${item.cantidad.toString()}"   //migrar
-            binding.tvDescripcion.text= item.descripcion
             binding.clickListener= clickListener
             binding.imgListener=imgListener
-
-            Glide.with(itemView)
-                .load(item.imgUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL) //guarda toda la imagen
-                .centerCrop()
-                .into(binding.imgProducto)
-
             binding.executePendingBindings()
         }
 

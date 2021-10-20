@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="producto"
+            type="com.moappdev.clienteapp.model.Producto" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -11,6 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="@dimen/minimo"
+            loadImage="@{producto.imgUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -23,6 +31,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="@{producto.name}"
             app:layout_constraintStart_toEndOf="@id/imgProducto"
             app:layout_constraintEnd_toStartOf="@id/btnRemove"
             app:layout_constraintTop_toTopOf="@id/imgProducto"

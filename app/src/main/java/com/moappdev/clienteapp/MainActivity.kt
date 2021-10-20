@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         val navCont= this.findNavController(R.id.myHostNavFragment)
         NavigationUI.setupActionBarWithNavController(this, navCont)
-        mAppBarConfiguration= AppBarConfiguration(navCont.graph)
+          mAppBarConfiguration= AppBarConfiguration(navCont.graph)
     }
 
     //menu y button up

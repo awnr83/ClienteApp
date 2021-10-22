@@ -39,7 +39,9 @@ class ProductCartAdapter(private val productoList: MutableList<Producto>,
         holder.setListener(_producto)
         holder.binding.apply {
             producto= _producto
-            tvCantidad.text= _producto.cantidad.toString()
+            if(_producto.cantidad>1)
+                tvCantidad.text= _producto.newCantidad.toString()
+
         }
 
     }

@@ -1,17 +1,27 @@
 package com.moappdev.clienteapp.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStateManagerControl
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.firestore.ListenerRegistration
+import com.moappdev.clienteapp.R
 import com.moappdev.clienteapp.cart.CartFragment
 import com.moappdev.clienteapp.databinding.FragmentHomeBinding
+import com.moappdev.clienteapp.detalle.DetalleFragment
 import com.moappdev.clienteapp.model.Producto
+
+private var productoList= mutableListOf<Producto>()
 
 class HomeFragment : Fragment(), HomeAux{
 
@@ -21,8 +31,6 @@ class HomeFragment : Fragment(), HomeAux{
 
     private lateinit var mViewModel: HomeViewModel
 
-    private var mProductoSelected: Producto?= null
-
     private var lista= mutableListOf<Producto>()
 
     override fun onCreateView(
@@ -30,6 +38,11 @@ class HomeFragment : Fragment(), HomeAux{
         savedInstanceState: Bundle?
     ): View? {
         mBinding= FragmentHomeBinding.inflate(inflater)
+
+        val args= HomeFragmentArgs.fromBundle(requireArguments())
+        args.producto?.let {
+            actualizarListCarrito(it)
+        }
 
         mViewModel= ViewModelProvider(this).get(HomeViewModel::class.java)
         mBinding.viewModel=mViewModel
@@ -57,28 +70,48 @@ class HomeFragment : Fragment(), HomeAux{
     private fun configRecyclerView(){
         mAdapter= HomeAdapter(
             HomeAdapter.ProductoListener {
-                mProductoSelected=it
-//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(it))
-//                AddDialogFragment().show(parentFragmentManager,AddDialogFragment::class.java.simpleName)
-            },
-            HomeAdapter.ImageListener{
-//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(it))
+//                mProductoSelected=it
+
+                val fragment=DetalleFragment()
+
+//                fragment.requireActivity().supportFragmentManager.beginTransaction()
+//                    .add(R.id.clDetalle, fragment)
+//                    .addToBackStack(null)
+//                    .commit()
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(it))
+
             }
         )
         mBinding.recyclerViewProductos.adapter= mAdapter
     }
-
     private fun configBtnCart() {
         mBinding.btnCart.setOnClickListener {
             CartFragment().show( childFragmentManager.beginTransaction(),CartFragment::class.java.simpleName)
         }
     }
+    private fun actualizarListCarrito(producto: Producto){
+        if(productoList.contains(producto))
+            productoList[productoList.indexOf(producto)]=producto
+        else
+            productoList.add(producto)
+    }
 
     override fun getProductsCart(): MutableList<Producto> {
-        val productoList= mutableListOf<Producto>()
-        (1..5).forEach{
-            productoList.add(Producto(it.toString(),"Producot: $it", "sadasdad","",it, (2*it).toDouble()))
-        }
+ //       val productoList= mutableListOf<Producto>()
+//        mProductoSelected?.let { productoList.add(it) }
+//        (1..5).forEach{
+//            productoList.add(Producto(it.toString(),"Producot: $it", "sadasdad","",it, (2*it).toDouble()))
+//        }
         return productoList
     }
+
+    override fun addProductCart(producto: Producto) {
+//        Log.i("alfredo","producto: ${producto.name} - ${producto.newCantidad}")
+//        if(producto.cantidad>0)
+//            productoList.add(producto)
+    }
+
+//    override fun getProductoSelect(): Producto? {
+//        return mProductoSelected
+//    }
 }

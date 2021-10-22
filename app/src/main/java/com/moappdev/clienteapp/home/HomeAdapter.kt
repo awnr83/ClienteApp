@@ -11,17 +11,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moappdev.clienteapp.databinding.ItemProductoBinding
 import com.moappdev.clienteapp.model.Producto
 
-class HomeAdapter(val clickListener: ProductoListener, val imgListener: ImageListener)
+class HomeAdapter(val clickListener: ProductoListener)
     : ListAdapter<Producto, HomeAdapter.Viewholder>(ProductoCallback()) {
 
     class Viewholder private constructor(val binding: ItemProductoBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Producto, clickListener: ProductoListener, imgListener: ImageListener) {
+        fun bind(item: Producto, clickListener: ProductoListener) {
             binding.producto=item
             binding.tvPrecio.text= "Precio: $ ${item.precio.toString()}"    //migrar
             binding.tvCantidad.text= "Stock: ${item.cantidad.toString()}"   //migrar
             binding.clickListener= clickListener
-            binding.imgListener=imgListener
             binding.executePendingBindings()
         }
 
@@ -45,14 +44,11 @@ class HomeAdapter(val clickListener: ProductoListener, val imgListener: ImageLis
     class ProductoListener(val clickListener: (producto: Producto)->Unit) {
         fun onClick(producto: Producto)= clickListener(producto)
     }
-    class ImageListener(val imgListener: (producto:Producto)->Unit){
-        fun onClick(producto: Producto)= imgListener(producto)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         return Viewholder.from(parent)
     }
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        holder.bind(getItem(position), clickListener, imgListener)
+        holder.bind(getItem(position), clickListener)
     }
 }

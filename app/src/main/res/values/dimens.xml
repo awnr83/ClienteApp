@@ -2,4 +2,5 @@
 <resources>
     <dimen name="minimo">8dp</dimen>
     <dimen name="normal">16dp</dimen>
+    <dimen name="medio">24dp</dimen>
 </resources>

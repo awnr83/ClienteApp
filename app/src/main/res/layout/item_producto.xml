@@ -10,9 +10,6 @@
         <variable
             name="clickListener"
             type="com.moappdev.clienteapp.home.HomeAdapter.ProductoListener"/>
-        <variable
-            name="imgListener"
-            type="com.moappdev.clienteapp.home.HomeAdapter.ImageListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +23,6 @@
             loadImage="@{producto.imgUrl}"
             android:layout_width="120dp"
             android:layout_height="0dp"
-            android:onClick="@{()->imgListener.onClick(producto)}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -38,12 +38,12 @@ class DetalleFragment:Fragment() {
         mBinding.lifecycleOwner=this
 
         mViewModel.navigate.observe(viewLifecycleOwner, Observer {
-            if(it){
-                if(producto.newCantidad>0)
-                    findNavController().navigate(DetalleFragmentDirections.actionDetalleFragmentToHomeFragment().setProducto(producto))
-                else
-                    findNavController().navigateUp()
-            }
+            if(it)
+                findNavController().navigate(DetalleFragmentDirections.actionDetalleFragmentToHomeFragment().setProducto(producto))
+        })
+        mViewModel.cancelar.observe(viewLifecycleOwner, Observer {
+            if(it)
+                findNavController().navigateUp()
         })
 
         return mBinding.root
@@ -55,21 +55,5 @@ class DetalleFragment:Fragment() {
                 return DetalleViewModel(producto) as T
             throw IllegalArgumentException("Error al crear el ViewModel")
         }
-
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        getProducto()
-//    }
-//
-//    private fun getProducto() {
-//        producto= (parentFragment as? HomeAux)?.getProductoSelect()
-//
-//        producto?.let {
-//            mBinding.producto=it
-//            mBinding.tvPrecio.text="$${it.precio}"  //hay que migrar
-//        }
-//    }
 }

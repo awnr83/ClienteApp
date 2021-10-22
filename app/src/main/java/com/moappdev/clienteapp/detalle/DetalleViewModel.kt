@@ -22,10 +22,15 @@ class DetalleViewModel(private var mProducto: Producto): ViewModel() {
     val navigate: LiveData<Boolean>
         get()=_navigate
 
+    private val _cancelar=MutableLiveData<Boolean>()
+    val cancelar: LiveData<Boolean>
+        get()=_cancelar
+
     init {
-        _cantidad.value=0
+        _cantidad.value=producto.newCantidad
         _total.value=""
         _navigate.value=false
+        _cancelar.value=false
     }
 
     fun add(){
@@ -39,14 +44,14 @@ class DetalleViewModel(private var mProducto: Producto): ViewModel() {
         total()
     }
     fun agregar(){
-        mProducto.newCantidad= _cantidad.value!!
-        _navigate.value=true
+        mProducto.newCantidad = _cantidad.value!!
+        _navigate.value = true
     }
 
     private fun total(){
         if(_cantidad.value==0)
             _total.value=""
         else
-            _total.value= "Total: $ ${_cantidad.value!! * producto.precio}"
+            _total.value= "Total: $ ${_cantidad.value!! * producto.precio} pesos (${_cantidad.value!!} x $${producto.precio})"
     }
 }

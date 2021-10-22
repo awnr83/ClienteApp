@@ -27,11 +27,8 @@ class HomeFragment : Fragment(), HomeAux{
 
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mAdapter: HomeAdapter
-    private lateinit var mFirestoreListener: ListenerRegistration
 
     private lateinit var mViewModel: HomeViewModel
-
-    private var lista= mutableListOf<Producto>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,17 +66,16 @@ class HomeFragment : Fragment(), HomeAux{
 
     private fun configRecyclerView(){
         mAdapter= HomeAdapter(
-            HomeAdapter.ProductoListener {
-//                mProductoSelected=it
-
-                val fragment=DetalleFragment()
-
-//                fragment.requireActivity().supportFragmentManager.beginTransaction()
-//                    .add(R.id.clDetalle, fragment)
-//                    .addToBackStack(null)
-//                    .commit()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(it))
-
+            HomeAdapter.ProductoListener {producto->
+                var ok=true
+                productoList.forEach {
+                    if(it.id == producto.id){
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(it))
+                        ok=false
+                    }
+                }
+                if(ok)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetalleFragment(producto))
             }
         )
         mBinding.recyclerViewProductos.adapter= mAdapter
@@ -90,28 +86,39 @@ class HomeFragment : Fragment(), HomeAux{
         }
     }
     private fun actualizarListCarrito(producto: Producto){
-        if(productoList.contains(producto))
-            productoList[productoList.indexOf(producto)]=producto
-        else
+        var ok=true
+        productoList.forEach {
+            if(it.id==producto.id) {
+                if(it.newCantidad==0){
+                    productoList.remove(it)
+                    ok=false
+                    return@forEach
+                }else{
+                    it.newCantidad= producto.newCantidad
+                    ok=false
+                    return@forEach
+                }
+            }
+        }
+        if(ok && producto.newCantidad>0)
             productoList.add(producto)
+        updateTotal()
     }
 
-    override fun getProductsCart(): MutableList<Producto> {
- //       val productoList= mutableListOf<Producto>()
-//        mProductoSelected?.let { productoList.add(it) }
-//        (1..5).forEach{
-//            productoList.add(Producto(it.toString(),"Producot: $it", "sadasdad","",it, (2*it).toDouble()))
-//        }
-        return productoList
+    //interface HomeAux
+    override fun getProductsCart()= productoList
+    override fun updateTotal() {
+        var total= 0.0
+        productoList.forEach {
+            total+= it.newCantidad*it.precio
+        }
+        if(total==0.0)
+            mBinding.tvCar.text="Carrito vacio"
+        else
+            mBinding.tvCar.text="Total: $$total pesos"
     }
 
-    override fun addProductCart(producto: Producto) {
-//        Log.i("alfredo","producto: ${producto.name} - ${producto.newCantidad}")
-//        if(producto.cantidad>0)
-//            productoList.add(producto)
+    override fun clearCar() {
+        productoList.clear()
     }
-
-//    override fun getProductoSelect(): Producto? {
-//        return mProductoSelected
-//    }
 }

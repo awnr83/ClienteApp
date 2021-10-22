@@ -2,8 +2,9 @@
     <string name="app_name">ClienteApp</string>
 
     <string name="fd_disponible">Disponible: %1$d</string>
-    <string name="fd_total">Total: $%1$.2f pesos (%2$d x $%3.2f)</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fc_carrito_vacio">Carrito vacio</string>
+    <string name="fc_carrito_total">Total: $%1$.2f pesos></string>
+
 </resources>

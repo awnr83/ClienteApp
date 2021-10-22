@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.moappdev.clienteapp.R
 import com.moappdev.clienteapp.databinding.FragmentCartBinding
 import com.moappdev.clienteapp.home.HomeAux
 import com.moappdev.clienteapp.model.Producto
@@ -16,10 +19,12 @@ class CartFragment : BottomSheetDialogFragment(),OnCartListener {
 
     private lateinit var mBinding: FragmentCartBinding
     private lateinit var bottomSheetBeahvior: BottomSheetBehavior<*>
-    private lateinit var mAdapter: ProductCartAdapter
+    private lateinit var mAdapter: CartAdapter
+    private var mTotal=0.0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         mBinding= FragmentCartBinding.inflate(LayoutInflater.from(context))
+
         mBinding?.let {
             val bottomSheetDialog= super.onCreateDialog(savedInstanceState) as BottomSheetDialog
             bottomSheetDialog.setContentView(it.root)
@@ -38,14 +43,8 @@ class CartFragment : BottomSheetDialogFragment(),OnCartListener {
     }
     private fun setupRecyclerView(){
         mBinding?.let {
-            mAdapter= ProductCartAdapter(mutableListOf<Producto>(), this)
-
+            mAdapter= CartAdapter(mutableListOf<Producto>(), this)
             mBinding.rvCart.adapter=mAdapter
-
-//            (1..5).forEach{
-//                val producto=Producto(it.toString(),"Producot: $it", "sadasdad","",it, (2*it).toDouble())
-//                mAdapter.add(producto)
-//            }
         }
     }
     private fun setupButton(){
@@ -53,22 +52,39 @@ class CartFragment : BottomSheetDialogFragment(),OnCartListener {
             it.btncancelar.setOnClickListener {
                 bottomSheetBeahvior.state= BottomSheetBehavior.STATE_HIDDEN
             }
+            it.fabPagar.setOnClickListener {
+                requestOrder()
+            }
         }
     }
 
+    private fun requestOrder() {
+        dismiss()   //sale del fragment
+        (parentFragment as? HomeAux)?.clearCar()
+    }
+
     private fun getProductos(){
-        Log.i("alfredo","entro en getProduct")
         (parentFragment as? HomeAux)?.getProductsCart()?.forEach {
-            Log.i("alfredo","entro")
             mAdapter.add(it)
         }
     }
 
     override fun setCantidad(producto: Producto) {
-        TODO("Not yet implemented")
+        mAdapter.update(producto)
     }
 
     override fun showTotal(total: Double) {
-        TODO("Not yet implemented")
+        mTotal= total
+        mBinding?.let {
+            if(mTotal!=0.0)
+                it.tvTotal.text= getString(R.string.fc_carrito_total,total)
+            else
+                it.tvTotal.text= getString(R.string.fc_carrito_vacio)
+        }
+    }
+
+    override fun onDestroyView() {
+        (parentFragment as? HomeAux)?.updateTotal()
+        super.onDestroyView()
     }
 }

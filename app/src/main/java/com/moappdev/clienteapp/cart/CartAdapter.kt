@@ -80,4 +80,6 @@ class CartAdapter(private val productoList: MutableList<Producto>,
             result+= product.newCantidad*product.precio
         listener.showTotal(result)
     }
+
+    fun getProductos():List<Producto> = productoList //se usa para armar el OrdenPRoducto
 }

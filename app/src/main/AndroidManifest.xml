@@ -11,7 +11,8 @@
         android:theme="@style/Theme.ClienteApp">
         <activity
             android:name=".orden.OrdenActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/ao_rastreo"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

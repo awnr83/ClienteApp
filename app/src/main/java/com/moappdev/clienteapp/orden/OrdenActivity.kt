@@ -1,3 +1,4 @@
+
 package com.moappdev.clienteapp.orden
 
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +9,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.moappdev.clienteapp.R
 import com.moappdev.clienteapp.databinding.ActivityOrdenBinding
 import com.moappdev.clienteapp.model.Orden
+import com.moappdev.clienteapp.track.OrdenAux
+import com.moappdev.clienteapp.track.TrackFragment
 
-class OrdenActivity : AppCompatActivity(), OnOrdenListener {
+class OrdenActivity : AppCompatActivity(), OnOrdenListener, OrdenAux {
 
     private lateinit var mBinding:ActivityOrdenBinding
     private lateinit var mAdapter: OrdenAdapter
+
+    private lateinit var ordenSelect: Orden
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +53,20 @@ class OrdenActivity : AppCompatActivity(), OnOrdenListener {
     }
 
     override fun onTrack(orden: Orden) {
-        TODO("Not yet implemented")
+
+        ordenSelect=orden
+
+        val fragment= TrackFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.activity_orden, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onStartChat(orden: Orden) {
         TODO("Not yet implemented")
     }
+
+    override fun getOrdeSelect()=ordenSelect
 }

@@ -1,5 +1,6 @@
 package com.moappdev.clienteapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -16,6 +17,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.moappdev.clienteapp.databinding.ActivityMainBinding
+import com.moappdev.clienteapp.orden.OrdenActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
@@ -88,6 +90,9 @@ class MainActivity : AppCompatActivity() {
                             mBinding.progresBar.visibility= View.VISIBLE
                         }
                     }
+            }
+            R.id.mnuHistorial->{
+                startActivity(Intent(this, OrdenActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

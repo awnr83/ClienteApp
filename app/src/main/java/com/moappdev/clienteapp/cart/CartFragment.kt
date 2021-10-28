@@ -79,7 +79,8 @@ class CartFragment : BottomSheetDialogFragment(),OnCartListener {
             val orden=Orden(clienteId = it.uid, productList = productos, total = total, status = 1)
 
             val db= FirebaseFirestore.getInstance()
-            db.collection("request").add(orden)
+            db.collection("request")
+                .add(orden)
                 .addOnSuccessListener {
                     dismiss()   //sale del fragment
 
@@ -99,7 +100,7 @@ class CartFragment : BottomSheetDialogFragment(),OnCartListener {
 
     private fun enableUI(enable: Boolean){
         mBinding.btncancelar.isEnabled=enable
-        mBinding.fabPagar.isExtended=enable
+        mBinding.fabPagar.isEnabled=enable
     }
 
     private fun getProductos(){
